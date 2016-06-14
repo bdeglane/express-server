@@ -29,7 +29,7 @@ export default class Server {
         dispatcher.buildRouter(routes);
         this.app.use("/api/v1", Route.getRouter());
 
-        // implement jwt
+        // todo implement jwt
         //this.app.use("/api/v1", ()=> {
         //
         //});

@@ -10,6 +10,8 @@ let singletonEnforcer = Symbol();
  *
  * La class Middleware permet d'attacher des médiateurs sur une route express.
  * Cette classe est un singleton.
+ *
+ * todo voir du cote de l'event emitter node
  */
 export default class Middleware {
     /**
