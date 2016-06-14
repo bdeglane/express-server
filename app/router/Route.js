@@ -24,6 +24,7 @@ export default class Route {
 	 *
 	 */
 	stackMiddleware() {
+		this.eventEmitter.on('error', (err)=> console.log('oops'));
 		this.eventEmitter.on('callMiddleware', ({req,res})=> Log.inConsole(req));
 	}
 
