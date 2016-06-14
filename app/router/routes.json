@@ -1,0 +1,42 @@
+{
+  "home": [
+    {
+      "method": "get",
+      "uri": "/"
+    }
+  ],
+  "post": [
+    {
+      "method": "get",
+      "uri": "/post"
+    },
+    {
+      "method": "get",
+      "uri": "/post/:id"
+    },
+    {
+      "method": "post",
+      "uri": "/post"
+    },
+    {
+      "method": "put",
+      "uri": "/post/:id"
+    },
+    {
+      "method": "delete",
+      "uri": "/post/:id"
+    }
+  ],
+  "user": [
+    {
+      "method": "get",
+      "uri": "/user"
+    }
+  ],
+  "app": [
+    {
+      "method": "get",
+      "uri": "/app"
+    }
+  ]
+}
