@@ -60,7 +60,7 @@ export default class Server {
     }
 
     /**
-     * to infinty and beyond
+     * to infinity and beyond
      */
     start() {
         this.addMiddleware();

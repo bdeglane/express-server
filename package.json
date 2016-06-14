@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "description": "A simple Express server in es6",
   "main": "public/server.js",
-  "repository": "bitbucket:lecompas/pyxis-style-guide",
+  "repository": "github:bdeglane/express-server",
   "author": {
     "name": "Benoît Deglane",
     "email": "deglane.benoit.pro@gmail.com"
