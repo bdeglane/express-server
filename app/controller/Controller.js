@@ -23,8 +23,7 @@ export default class Controller {
         }
     }
 
-    // todo create function for  
-    
+    // todo create function for
     response() {
         // call correct action method
         let func = this.method.toLowerCase() + "Action" || "defaultAction";
@@ -32,7 +31,7 @@ export default class Controller {
         // call controller action method
         // call the data
         this.controller[func]()
-            // then call the view
+        // then call the view
             .then(this.controller.callView)
             // then send the response
             .then(this.controller.callRes.bind(this.controller))
