@@ -5,6 +5,11 @@ import UserDao from "../dao/UserDao.js";
 import View from "../view/View.js";
 
 export default class User {
+    /**
+     *
+     * @param req
+     * @param res
+     */
     constructor(req, res) {
         this.req = req;
         this.res = res;
@@ -13,8 +18,7 @@ export default class User {
 
     getAction() {
         return new Promise((resolve, reject)=> {
-            //resolve(this.dao.getAllUser());
-            console.log('test');
+            resolve(this.dao.getAllUser());
         });
     }
 

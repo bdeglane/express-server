@@ -11,6 +11,7 @@ export default class Controller {
         this.callRessourceController(ressource, req, res);
     }
 
+    // todo loop on config file
     callRessourceController(ressource, req, res) {
         switch (ressource) {
             case "user":
@@ -22,10 +23,18 @@ export default class Controller {
         }
     }
 
+    // todo create function for  
+    
     response() {
+        // call correct action method
         let func = this.method.toLowerCase() + "Action" || "defaultAction";
+
+        // call controller action method
+        // call the data
         this.controller[func]()
+            // then call the view
             .then(this.controller.callView)
+            // then send the response
             .then(this.controller.callRes.bind(this.controller))
             .catch(console.log);
     }
