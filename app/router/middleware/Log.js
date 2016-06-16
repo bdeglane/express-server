@@ -11,7 +11,8 @@ export default class Log {
 	 *
 	 * @param req object
 	 */
-	static inConsole(req) {
+	static inConsole(req,next) {
+		next();
 		if (process.env.NODE_ENV === "development") {
 			console.log(chalk.green("\n[Url]"), chalk.green(req.method + " " + req.protocol + "://" + req.headers['x-forwarded-server'] + req.originalUrl)/*(new Date()),req.headers['user-agent'],req.headers['host'],req.headers['x-forwarded-for'],req.secure*/);
 			console.log(chalk.green(" |__"), chalk.yellow("[date] "), (new Date()), req.headers['user-agent'], req.headers['host'], req.headers['x-forwarded-for'], req.secure);

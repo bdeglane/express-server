@@ -28,12 +28,8 @@ export default class Server {
     addRouter() {
         let dispatcher = new Dispatcher();
         dispatcher.buildRouter(routes);
-        this.app.use("/api/v1", Route.getRouter());
-
-        // todo implement jwt
-        //this.app.use("/api/v1", ()=> {
-        //
-        //});
+        let router = Route.getRouter();
+        this.app.use("/api/v1", router);
     }
 
     /**
