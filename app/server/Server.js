@@ -7,6 +7,7 @@ import fs from "fs";
 import path from "path";
 import morgan from "morgan";
 import FileStreamRotator from "file-stream-rotator";
+import compression from "compression";
 
 import Dispatcher from "../router/Dispatcher.js";
 import Route from "../router/Route.js";
@@ -41,6 +42,7 @@ export default class Server {
     addMiddleware() {
         this.app.use(bodyParser.json());
         this.app.use(bodyParser.urlencoded({extended: true}));
+        this.app.use(compression());
 
         /*
          * Morgan logger

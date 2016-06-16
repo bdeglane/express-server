@@ -37,6 +37,7 @@
     "body-parser": "^1.14.2",
     "chai": "^3.5.0",
     "chalk": "^1.1.1",
+    "compression": "^1.6.2",
     "express": "^4.13.4",
     "file-stream-rotator": "0.0.6",
     "gulp": "^3.9.1",
