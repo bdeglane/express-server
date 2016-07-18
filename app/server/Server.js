@@ -63,14 +63,15 @@ export default class Server {
          * Jwt auth midlleware
          */
         this.app.use(function (req, res, next) {
-
             // get the user token
             let token = req.body.token || req.query.token || req.headers['x-access-token'];
-
+            // if the token exist in header
             if (token) {
-
+                // verify if it's a valid token
                 jwt.verify(token, config[process.env.NODE_ENV].app.secret, (err, decoded) => {
+                    // if the token is incorrect
                     if (err) {
+                        // return an error
                         return res.json({success: false, message: 'Failed to authenticate token.'});
                     } else {
                         // if everything is good, save to request for use in other routes
