@@ -8,25 +8,23 @@ export default class View {
      * @returns {{}}
      */
     constructor(data, status) {
-        return this.build(data, status);
+        this.res = {
+            status: status,
+            data: data || {}
+        };
+        return this.res;
     }
 
     /**
      *
      * @param data
-     * @param status
-     * @returns {{}}
+     * @returns {*}
      */
-    build(data, status) {
-
-        this.res = {};
-
-        if (status) this.res.status = status;
-
+    build(data) {
         for (let key in data) {
             this.res[key] = data[key];
         }
-
+        console.log(this);
         return this.res;
     }
 }
