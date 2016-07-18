@@ -2,7 +2,11 @@
   "development": {
     "app": {
       "port": 3001,
-      "env": "development"
+      "env": "development",
+      "token": {
+        "secret": "secret",
+        "expire": 84000
+      }
     },
     "database": {
       "host": "127.0.0.1",
@@ -14,7 +18,11 @@
   "pre-production": {
     "app": {
       "port": 3001,
-      "env": "production"
+      "env": "production",
+      "token": {
+        "secret": "secret",
+        "expire": 84000
+      }
     },
     "database": {
       "host": "127.0.0.1",
@@ -26,7 +34,11 @@
   "production": {
     "app": {
       "port": 3001,
-      "env": "production"
+      "env": "production",
+      "token": {
+        "secret": "secret",
+        "expire": 84000
+      }
     },
     "database": {
       "host": "127.0.0.1",

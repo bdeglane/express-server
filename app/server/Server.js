@@ -23,17 +23,58 @@ export default class Server {
     constructor() {
         this.app = express();
         process.env.PORT = config[process.env.NODE_ENV].app.port;
-        // this.view = new View();
-        // console.log(this.view);
     }
 
-    /**
-     * Create a generic router
-     */
     addRouter() {
+        this.addPublicRouter();
+        this.addPrivateRouter();
+    }
+
+    addPublicRouter() {
         let dispatcher = new Dispatcher();
-        dispatcher.buildRouter(privateRoutes);
+        // build router
+        dispatcher.buildRouter(publicRoutes);
+        // get the router
         let router = Route.getRouter();
+        // and give it to express
+        this.app.use(router);
+    }
+
+    addPrivateRouter() {
+        let dispatcher = new Dispatcher();
+        // build router
+        dispatcher.buildRouter(privateRoutes);
+        // get the router
+        let router = Route.getRouter();
+        // add auth middleware
+        router.use(function (req, res, next) {
+            // get the user token
+            let token = req.body.token || req.query.token || req.headers['x-access-token'];
+            // if the token exist in header
+            if (token) {
+                // verify if it's a valid token
+                jwt.verify(token, config[process.env.NODE_ENV].app.token.secret, (err, decoded) => {
+                    // if the token is incorrect
+                    if (err) {
+                        // return an error
+                        return res.status(401).json(new View({
+                            success: false,
+                            message: 'Failed to authenticate token.'
+                        }, 401));
+                    } else {
+                        // if everything is good, save to request for use in other routes
+                        req.decoded = decoded;
+                        next();
+                    }
+                });
+            } else {
+                return res.status(401).json(new View({
+                    success: false,
+                    message: 'no token'
+                }, 401));
+            }
+        });
+        // and give it to express
         this.app.use("/api/v1", router);
     }
 
@@ -60,38 +101,6 @@ export default class Server {
             verbose: false
         });
         this.app.use(morgan('[:date[clf]] [:req[x-forwarded-for]] [:req[x-forwarded-server]] :remote-user ":method :url"  :status :response-time ms :res[content-length] ":user-agent"', {stream: accessLogStream}));
-
-
-        /**
-         * Jwt auth midlleware
-         */
-        this.app.use(function (req, res, next) {
-            // get the user token
-            let token = req.body.token || req.query.token || req.headers['x-access-token'];
-            // if the token exist in header
-            if (token) {
-                // verify if it's a valid token
-                jwt.verify(token, config[process.env.NODE_ENV].app.secret, (err, decoded) => {
-                    // if the token is incorrect
-                    if (err) {
-                        // return an error
-                        return res.status(401).json(new View({
-                            success: false,
-                            message: 'Failed to authenticate token.'
-                        }, 401));
-                    } else {
-                        // if everything is good, save to request for use in other routes
-                        req.decoded = decoded;
-                        next();
-                    }
-                });
-            } else {
-                return res.status(401).json(new View({
-                    success: false,
-                    message: 'no token'
-                }, 401));
-            }
-        });
     }
 
     /**
