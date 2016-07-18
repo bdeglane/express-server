@@ -12,6 +12,7 @@ import jwt from "jsonwebtoken";
 
 import Dispatcher from "../router/Dispatcher.js";
 import Route from "../router/Route.js";
+import View from "../view/View.js";
 
 import config from "../../conf/config.json";
 import privateRoutes from "../router/config/routes.json";
@@ -22,6 +23,8 @@ export default class Server {
     constructor() {
         this.app = express();
         process.env.PORT = config[process.env.NODE_ENV].app.port;
+        // this.view = new View();
+        // console.log(this.view);
     }
 
     /**
@@ -72,7 +75,10 @@ export default class Server {
                     // if the token is incorrect
                     if (err) {
                         // return an error
-                        return res.json({success: false, message: 'Failed to authenticate token.'});
+                        return res.status(401).json(new View({
+                            success: false,
+                            message: 'Failed to authenticate token.'
+                        }, 401));
                     } else {
                         // if everything is good, save to request for use in other routes
                         req.decoded = decoded;
@@ -80,10 +86,10 @@ export default class Server {
                     }
                 });
             } else {
-                return res.status(403).send({
+                return res.status(401).json(new View({
                     success: false,
                     message: 'no token'
-                });
+                }, 401));
             }
         });
     }
