@@ -8,12 +8,14 @@ import path from "path";
 import morgan from "morgan";
 import FileStreamRotator from "file-stream-rotator";
 import compression from "compression";
+import jwt from "jsonwebtoken";
 
 import Dispatcher from "../router/Dispatcher.js";
 import Route from "../router/Route.js";
 
 import config from "../../conf/config.json";
-import routes from "../router/routes.json";
+import privateRoutes from "../router/config/routes.json";
+import publicRoutes from "../router/config/routesPublic.json";
 
 export default class Server {
 
@@ -27,7 +29,7 @@ export default class Server {
      */
     addRouter() {
         let dispatcher = new Dispatcher();
-        dispatcher.buildRouter(routes);
+        dispatcher.buildRouter(privateRoutes);
         let router = Route.getRouter();
         this.app.use("/api/v1", router);
     }
@@ -55,6 +57,34 @@ export default class Server {
             verbose: false
         });
         this.app.use(morgan('[:date[clf]] [:req[x-forwarded-for]] [:req[x-forwarded-server]] :remote-user ":method :url"  :status :response-time ms :res[content-length] ":user-agent"', {stream: accessLogStream}));
+
+
+        /**
+         * Jwt auth midlleware
+         */
+        this.app.use(function (req, res, next) {
+
+            // get the user token
+            let token = req.body.token || req.query.token || req.headers['x-access-token'];
+
+            if (token) {
+
+                jwt.verify(token, config[process.env.NODE_ENV].app.secret, (err, decoded) => {
+                    if (err) {
+                        return res.json({success: false, message: 'Failed to authenticate token.'});
+                    } else {
+                        // if everything is good, save to request for use in other routes
+                        req.decoded = decoded;
+                        next();
+                    }
+                });
+            } else {
+                return res.status(403).send({
+                    success: false,
+                    message: 'no token'
+                });
+            }
+        });
     }
 
     /**

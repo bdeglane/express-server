@@ -1,8 +1,8 @@
 import jwt from "jsonwebtoken";
+import config from "../../../conf/config.json";
 
 export default class Authenticate {
-    constructor(app) {
-        this.app = app;
+    constructor() {
     }
 
     static authMiddleware(req, res, next) {
@@ -12,7 +12,7 @@ export default class Authenticate {
 
         if (token) {
 
-            jwt.verify(token, this.app.get('secret'), (err, decoded) => {
+            jwt.verify(token, config[process.env.NODE_ENV].app.secret, (err, decoded) => {
                 if (err) {
                     return res.json({success: false, message: 'Failed to authenticate token.'});
                 } else {
