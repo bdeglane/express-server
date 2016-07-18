@@ -9,6 +9,7 @@ import morgan from "morgan";
 import FileStreamRotator from "file-stream-rotator";
 import compression from "compression";
 import jwt from "jsonwebtoken";
+import cors from "cors";
 
 import Dispatcher from "../router/Dispatcher.js";
 import Route from "../router/Route.js";
@@ -85,6 +86,7 @@ export default class Server {
         this.app.use(bodyParser.json());
         this.app.use(bodyParser.urlencoded({extended: true}));
         this.app.use(compression());
+        this.app.use(cors());
 
         /*
          * Morgan logger
