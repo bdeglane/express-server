@@ -9,21 +9,28 @@ export default class Auth extends BaseController {
      * @param res
      */
     constructor(req, res) {
-        super(req, res, 'auth')
+        super(req, res, 'auth');
     }
 
     postAction() {
-        return new Promise((resolve, reject)=> {
-            // 1. get the user in database
-            // 2. check username and passsord
-            // 3. if not true => error
-            // 4. if true =>
+        return new Promise((resolve, reject) => {
+                // 1. get the user in database
+                // 2. check username and passsord
+                // 3. if not true => error
+                // 4. if true =>
 
-            let token = jwt.sign({user: 'test', id: 'test'}, config[process.env.NODE_ENV].app.token.secret, {
-                expiresIn: config[process.env.NODE_ENV].app.token.expire
-            });
+                let login = this.req.body.login;
+                let password = this.req.body.password;
 
-            resolve({token: token});
-        });
+                if (login === 'admin' && password === 'admin') {
+                    let token = jwt.sign({user: 'test', id: 'test'}, config[process.env.NODE_ENV].app.token.secret, {
+                        expiresIn: config[process.env.NODE_ENV].app.token.expire
+                    });
+                    resolve({token: token});
+                } else {
+                    resolve({token: false});
+                }
+            }
+        );
     }
 }
