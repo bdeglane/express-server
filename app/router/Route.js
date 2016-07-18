@@ -26,8 +26,7 @@ export default class Route {
      */
     stackMiddleware() {
         this.eventEmitter.on('error', (err)=> console.log('oops'));
-        this.eventEmitter.on('callMiddleware', ({req, res, next})=> Log.inConsole(req, next));
-        this.eventEmitter.on('callMiddleware', ({req, res, next}) => Authenticate.authMiddleware(req, res, next));
+        this.eventEmitter.on('callMiddleware', ({req, res, next}) => Log.inConsole(req, next));
     }
 
     /**
