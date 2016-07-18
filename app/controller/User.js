@@ -1,18 +1,17 @@
 'use strict';
-
+import BaseController from "./BaseController.js";
 import UserModel from "../model/UserModel.js";
 import UserDao from "../dao/UserDao.js";
 import View from "../view/View.js";
 
-export default class User {
+export default class User extends BaseController {
     /**
      *
      * @param req
      * @param res
      */
     constructor(req, res) {
-        this.req = req;
-        this.res = res;
+        super(req,res,'user');
         this.dao = new UserDao();
     }
 
@@ -35,15 +34,5 @@ export default class User {
     deleteAction() {
         return new Promise((resolve, reject)=> {
         });
-    }
-
-    callView(data) {
-        return new Promise((resolve, reject)=> {
-            resolve(new View(data, 200));
-        });
-    }
-
-    callRes(view) {
-        this.res.status(view.res.status).send(view.res);
     }
 }
