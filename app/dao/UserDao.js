@@ -8,7 +8,11 @@ export default class UserDao {
     }
 
     getAllUser() {
-        return this.dao.connect('SELECT NOW() AS "theTime"')
-            .catch(console.log);
+        return this.dao.connect('SELECT NOW() AS "theTime"').catch(console.log);
+    }
+
+    getUser(login) {
+        console.log(login);
+        return this.dao.connect('SELECT NOW() AS "theTime"').catch(console.log);
     }
 }
