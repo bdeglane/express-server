@@ -2,7 +2,6 @@
 import BaseController from "./BaseController.js";
 import UserModel from "../model/UserModel.js";
 import UserDao from "../dao/UserDao.js";
-import View from "../view/View.js";
 
 export default class User extends BaseController {
     /**
