@@ -1,10 +1,4 @@
 {
-  "home": [
-    {
-      "method": "get",
-      "uri": "/"
-    }
-  ],
   "post": [
     {
       "method": "get",

@@ -1,0 +1,14 @@
+{
+  "home": [
+    {
+      "method": "get",
+      "uri": "/"
+    }
+  ],
+  "user": [
+    {
+      "method": "post",
+      "uri": "/user"
+    }
+  ]
+}
