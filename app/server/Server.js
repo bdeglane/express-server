@@ -14,6 +14,7 @@ import cors from "cors";
 import Dispatcher from "../router/Dispatcher.js";
 import Route from "../router/Route.js";
 import View from "../view/View.js";
+import Authenticate from "../router/middleware/Authenticate.js";
 
 import config from "../../conf/config.json";
 import privateRoutes from "../router/config/routes.json";
@@ -48,33 +49,7 @@ export default class Server {
         // get the router
         let router = Route.getRouter();
         // add auth middleware
-        router.use(function (req, res, next) {
-            // get the user token
-            let token = req.body.token || req.query.token || req.headers['x-access-token'];
-            // if the token exist in header
-            if (token) {
-                // verify if it's a valid token
-                jwt.verify(token, config[process.env.NODE_ENV].app.token.secret, (err, decoded) => {
-                    // if the token is incorrect
-                    if (err) {
-                        // return an error
-                        return res.status(401).json(new View({
-                            success: false,
-                            message: 'Failed to authenticate token.'
-                        }, 401));
-                    } else {
-                        // if everything is good, save to request for use in other routes
-                        req.decoded = decoded;
-                        next();
-                    }
-                });
-            } else {
-                return res.status(401).json(new View({
-                    success: false,
-                    message: 'no token'
-                }, 401));
-            }
-        });
+        router.use(Authenticate.authMiddleware);
         // and give it to express
         this.app.use("/api/v1", router);
     }

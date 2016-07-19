@@ -1,6 +1,7 @@
+'use strict!';
+
 import BaseController from './BaseController.js';
-import jwt from 'jsonwebtoken';
-import config from '../../conf/config.json';
+import Authenticate from '../router/middleware/Authenticate.js';
 
 export default class Auth extends BaseController {
     /**
@@ -10,6 +11,7 @@ export default class Auth extends BaseController {
      */
     constructor(req, res) {
         super(req, res, 'auth');
+        this.auth = new Authenticate();
     }
 
     postAction() {
@@ -23,9 +25,7 @@ export default class Auth extends BaseController {
                 let password = this.req.body.password;
 
                 if (login === 'admin' && password === 'admin') {
-                    let token = jwt.sign({user: 'test', id: 'test'}, config[process.env.NODE_ENV].app.token.secret, {
-                        expiresIn: config[process.env.NODE_ENV].app.token.expire
-                    });
+                    let token = this.auth.getToken({user: 'test', id: 'test'});
                     resolve({token: token});
                 } else {
                     resolve({token: false});
