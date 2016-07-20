@@ -1,30 +1,15 @@
 "use strict";
 
 export default class View {
-    /**
-     *
-     * @param data
-     * @param status
-     * @returns {{}}
-     */
-    constructor(data, status) {
-        this.res = {
-            status: status,
-            data: data || {}
-        };
-        return this.res;
-    }
+	constructor(data, status, success) {
+		this.build(data, status, success);
+	}
 
-    /**
-     *
-     * @param data
-     * @returns {*}
-     */
-    build(data) {
-        for (let key in data) {
-            this.res[key] = data[key];
-        }
-        console.log(this);
-        return this.res;
-    }
+	build(data, status, success) {
+		this.res = {
+			data: data,
+			success: success,
+			status: status
+		}
+	}
 }
