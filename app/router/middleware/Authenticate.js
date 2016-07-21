@@ -3,6 +3,9 @@ import config from "../../../conf/config.json";
 import View from "../../view/View.js";
 
 export default class Authenticate {
+	constructor(app) {
+		this.app = app;
+	}
 
     static authMiddleware(req, res, next) {
         // get the user token
