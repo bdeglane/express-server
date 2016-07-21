@@ -7,19 +7,21 @@ import events from "events";
 import Log from "./middleware/Log.js";
 import Authenticate from "./middleware/Authenticate.js";
 
-let router = express.Router();
+//let router = express.Router();
 
 export default class Route {
 
-    /**
-     *
-     * @param controller string
-     */
-    constructor(controller) {
-        this.controller = controller;
-        this.eventEmitter = new events.EventEmitter();
-        this.stackMiddleware();
-    }
+	static router = express.Router();
+
+	/**
+	 *
+	 * @param controller string
+	 */
+	constructor(controller) {
+		this.controller = controller;
+		this.eventEmitter = new events.EventEmitter();
+		this.stackMiddleware();
+	}
 
     /**
      *
@@ -29,46 +31,46 @@ export default class Route {
         this.eventEmitter.on('callMiddleware', ({req, res, next})=> Log.inConsole(req, next));
     }
 
-    /**
-     *
-     * @param route string
-     */
-    createRoute(route) {
-        router[route.method](route.uri, (req, res, next) => {
-            // first : call the middleware for a route
-            this.callMiddleware(req, res, next);
-        }, (req, res, next) => {
-            // then call the controller
-            this.callController(req, res, next);
-        });
-    }
+	/**
+	 *
+	 * @param route string
+	 */
+	createRoute(route) {
+		router[route.method](route.uri, (req, res, next) => {
+			// first : call the middleware for a route
+			this.callMiddleware(req, res, next);
+		}, (req, res, next) => {
+			// then call the controller
+			this.callController(req, res, next);
+		});
+	}
 
-    /**
-     *
-     * @param req
-     * @param res
-     * @param next
-     */
-    callMiddleware(req, res, next) {
-        this.eventEmitter.emit('callMiddleware', {req: req, res: res, next: next});
-    }
+	/**
+	 *
+	 * @param req
+	 * @param res
+	 * @param next
+	 */
+	callMiddleware(req, res, next) {
+		this.eventEmitter.emit('callMiddleware', {req: req, res: res, next: next});
+	}
 
-    /**
-     *
-     * @param req
-     * @param res
-     * @param next
-     */
-    callController(req, res, next) {
-        let ressourceController = new Controller(this.controller, req, res, next);
-        ressourceController.response();
-    }
+	/**
+	 *
+	 * @param req
+	 * @param res
+	 * @param next
+	 */
+	callController(req, res, next) {
+		let ressourceController = new Controller(this.controller, req, res, next);
+		ressourceController.response();
+	}
 
-    /**
-     *
-     * @returns {*}
-     */
-    static getRouter() {
-        return router;
-    }
+	/**
+	 *
+	 * @returns {*}
+	 */
+	static getRouter() {
+		return Route.router;
+	}
 }
