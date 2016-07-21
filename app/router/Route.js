@@ -36,7 +36,7 @@ export default class Route {
 	 * @param route string
 	 */
 	createRoute(route) {
-		router[route.method](route.uri, (req, res, next) => {
+		Route.router[route.method](route.uri, (req, res, next) => {
 			// first : call the middleware for a route
 			this.callMiddleware(req, res, next);
 		}, (req, res, next) => {
