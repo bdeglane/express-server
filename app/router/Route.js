@@ -7,9 +7,11 @@ import events from "events";
 import Log from "./middleware/Log.js";
 import Authenticate from "./middleware/Authenticate.js";
 
-let router = express.Router();
+//let router = express.Router();
 
 export default class Route {
+
+	static router = express.Router();
 
 	/**
 	 *
@@ -27,7 +29,7 @@ export default class Route {
 	stackMiddleware() {
 		this.eventEmitter.on('error', (err)=> console.log('oops'));
 		this.eventEmitter.on('callMiddleware', ({req, res, next})=> Log.inConsole(req, next));
-		this.eventEmitter.on('callMiddleware', ({req, res, next}) => Authenticate.authMiddleware(req, res, next));
+		//this.eventEmitter.on('callMiddleware', ({req, res, next}) => Authenticate.authMiddleware(req, res, next));
 	}
 
 	/**
@@ -35,7 +37,7 @@ export default class Route {
 	 * @param route string
 	 */
 	createRoute(route) {
-		router[route.method](route.uri, (req, res, next) => {
+		Route.router[route.method](route.uri, (req, res, next) => {
 			// first : call the middleware for a route
 			this.callMiddleware(req, res, next);
 		}, (req, res, next) => {
@@ -70,6 +72,6 @@ export default class Route {
 	 * @returns {*}
 	 */
 	static getRouter() {
-		return router;
+		return Route.router;
 	}
 }
