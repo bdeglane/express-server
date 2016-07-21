@@ -25,6 +25,10 @@
     {
       "method": "get",
       "uri": "/user"
+    },
+    {
+      "method": "get",
+      "uri": "/user/:id"
     }
   ],
   "app": [
