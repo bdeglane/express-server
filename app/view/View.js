@@ -3,16 +3,37 @@
 export default class View {
     /**
      *
-     * @param data
-     * @param status
-     * @returns {{}}
+     * @param ressource
      */
-    constructor(data, status) {
-        this.res = {
-            status: status,
-            data: data || {}
-        };
-        return this.res;
+    constructor(ressource) {
+        this.ressource = ressource;
+        this.res = {};
+        // this.res = {
+        //     status: status,
+        //     data: data || {}
+        // };
+        // return this.res;
+        return this;
+    }
+
+    /**
+     *
+     * @param data
+     * @returns {View}
+     */
+    setData(data) {
+        this.res.data = data || {};
+        return this;
+    }
+
+    /**
+     *
+     * @param status
+     * @returns {View}
+     */
+    setStatus(status) {
+        this.res.status = status;
+        return this;
     }
 
     /**
@@ -21,10 +42,10 @@ export default class View {
      * @returns {*}
      */
     build(data) {
-        for (let key in data) {
-            this.res[key] = data[key];
-        }
-        console.log(this);
-        return this.res;
+        // for (let key in data) {
+        //     this.res[key] = data[key];
+        // }
+        // console.log(this);
+        // return this.res;
     }
 }

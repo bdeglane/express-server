@@ -1,4 +1,4 @@
-'use strict!';
+'use strict';
 
 import BaseController from './BaseController.js';
 import Authenticate from '../router/middleware/Authenticate.js';

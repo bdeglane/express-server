@@ -1,5 +1,6 @@
 import jwt from "jsonwebtoken";
 import config from "../../../conf/config.json";
+import View from "../../view/View.js";
 
 export default class Authenticate {
 
@@ -12,11 +13,12 @@ export default class Authenticate {
             jwt.verify(token, config[process.env.NODE_ENV].app.token.secret, (err, decoded) => {
                 // if the token is incorrect
                 if (err) {
-                    // return an error
-                    return res.status(401).json(new View({
+                    let response = new View().setData({
                         success: false,
                         message: 'Failed to authenticate token.'
-                    }, 401));
+                    }).setStatus(401);
+                    // return an error
+                    return res.status(response.res.status).json(response.res);
                 } else {
                     // if everything is good, save to request for use in other routes
                     req.decoded = decoded;
@@ -24,10 +26,11 @@ export default class Authenticate {
                 }
             });
         } else {
-            return res.status(401).json(new View({
+            let response = new View().setData({
                 success: false,
                 message: 'no token'
-            }, 401));
+            }).setStatus(401);
+            return res.status(response.res.status).json(response.res);
         }
     }
 

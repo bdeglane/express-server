@@ -1,11 +1,11 @@
 "use strict";
 
+import BaseController from "./BaseController.js";
 import View from "../view/View.js";
 
-export default class Default {
+export default class Default extends BaseController {
     constructor(req, res) {
-        this.req = req;
-        this.res = res;
+        super(req, res, 'default');
     }
 
     defaultAction() {
@@ -14,19 +14,9 @@ export default class Default {
         });
     }
 
-    callView() {
+    errorAction() {
         return new Promise((resolve, reject)=> {
-            resolve(new View("not found", 404));
+            resolve({})
         });
-    }
-
-    callRes(view) {
-        this.res.status(view.res.status).send(view.res);
-    }
-
-    call() {
-        this.callView()
-            .then(this.callRes.bind(this))
-            .catch(console.log);
     }
 }
