@@ -9,7 +9,7 @@ export default class User extends BaseController {
      * @param res
      */
     constructor(req, res) {
-        super(req, res, 'user');
+        super('user', req, res);
         this.dao = new UserDao();
     }
 

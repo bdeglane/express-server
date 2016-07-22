@@ -10,7 +10,7 @@ export default class Auth extends BaseController {
      * @param res
      */
     constructor(req, res) {
-        super(req, res, 'auth');
+        super('auth', req, res);
         this.auth = new Authenticate();
     }
 

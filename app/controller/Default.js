@@ -5,7 +5,7 @@ import View from "../view/View.js";
 
 export default class Default extends BaseController {
     constructor(req, res) {
-        super(req, res, 'default');
+        super('default', req, res);
     }
 
     defaultAction() {

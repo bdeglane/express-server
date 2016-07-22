@@ -5,7 +5,7 @@ import View from "../view/View.js";
 
 export default class Error extends BaseController {
     constructor(req, res) {
-        super(req, res, 'error');
+        super('error', req, res);
     }
 
     errorAction() {

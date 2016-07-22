@@ -10,7 +10,7 @@ export default class BaseController {
      * @param res
      * @param ressource
      */
-    constructor(req, res, ressource) {
+    constructor(ressource, req, res) {
         this.req = req;
         this.res = res;
         this.ressource = ressource;
