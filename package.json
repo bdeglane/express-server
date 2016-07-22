@@ -30,6 +30,7 @@
     "extract-text-webpack-plugin": "^1.0.0",
     "gulp-nodemon": "^2.1.0",
     "json-loader": "^0.5.4",
+    "mocha": "^2.5.3",
     "node-libs-browser": "^0.5.3",
     "request": "^2.73.0",
     "source-map-support": "^0.4.0",
