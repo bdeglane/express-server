@@ -94,7 +94,8 @@ gulp.task('mocha:single', function () {
         read: false
     })
         .pipe(mocha({
-            reporter: 'min'
+            reporter: 'spec',
+            compilers: 'js:babel-core/register'
         }));
 });
 
