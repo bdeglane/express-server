@@ -82,11 +82,13 @@ export default class Server {
 
     /**
      * to infinity and beyond
+     * @returns {function}
      */
     start() {
         this.addMiddleware();
         this.addRouter();
-        http.createServer(this.app).listen(process.env.PORT, function () {
+
+        return http.createServer(this.app).listen(process.env.PORT, function () {
             console.info("server started on localhost", "port", process.env.PORT);
         });
     }
